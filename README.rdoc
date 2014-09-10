@@ -1,6 +1,28 @@
 = factory_girl_fixtures_template
 
-Description goes here.
+FactoryGirl generator has very simple template. This gem offers more complicated template
+that needs less work after.
+
+== Installation
+
+Add to your Gemfile
+
+  gem 'factory_girl_fixtures_template'
+
+Then bundle as usual.
+
+== Usage
+
+Next time you run
+
+  rails generate factory_girl:model SomeModel ...
+
+or
+
+  rails generate scaffold SomeModel ...
+
+you will get the more usefull Factory for the model SomeModel
+
 
 == Contributing to factory_girl_fixtures_template
  
