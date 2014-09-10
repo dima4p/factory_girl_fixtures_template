@@ -1,0 +1,17 @@
+FactoryGirl.define do
+  factory :<%= singular_table_name %><%= explicit_class_option %> do
+<% for attribute in attributes -%>
+<% if attribute.reference? -%>
+    <%= attribute.name %> { create :<%= attribute.name %> }
+<% elsif /\A(.*)_name\z/.match attribute.name -%>
+    sequence(:<%= attribute.name %>) {|n| "<%= class_name %>_<%= $1.try :capitalize %>#{n}" }
+<% elsif %[name title].include? attribute.name -%>
+    sequence(:<%= attribute.name %>) {|n| "<%= class_name %> ##{n}" }
+<% elsif attribute.name == 'position' -%>
+    sequence(:<%= attribute.name %>) {|n| n }
+<% else -%>
+    <%= attribute.name %> <%= attribute.default.inspect %>
+<% end -%>
+<% end -%>
+  end
+end

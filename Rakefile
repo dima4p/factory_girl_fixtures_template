@@ -17,10 +17,10 @@ Jeweler::Tasks.new do |gem|
   gem.name = "factory_girl_fixtures_template"
   gem.homepage = "http://github.com/dima4p/factory_girl_fixtures_template"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Better FactoryGirl template}
+  gem.description = %Q{FactoryGirl template that behave more smart than standard one}
   gem.email = "dima@koulikoff.ru"
-  gem.authors = ["Dmitri Koulikoff (acer)"]
+  gem.authors = ["Dmitri Koulikoff"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
