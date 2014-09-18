@@ -5,6 +5,8 @@ FactoryGirl.define do
     <%= attribute.name %> { create :<%= attribute.name %> }
 <% elsif /\A(.*)_name\z/.match attribute.name -%>
     sequence(:<%= attribute.name %>) {|n| "<%= class_name %>_<%= $1.try :capitalize %>#{n}" }
+<% elsif /\A.*_([a-z]{2}(_[a-z]{2})?)\z/.match attribute.name -%>
+    sequence(:<%= attribute.name %>) {|n| "<%= class_name %>_<%= $1 %>#{n}" }
 <% elsif %[name title].include? attribute.name -%>
     sequence(:<%= attribute.name %>) {|n| "<%= class_name %> ##{n}" }
 <% elsif attribute.name == 'position' -%>
