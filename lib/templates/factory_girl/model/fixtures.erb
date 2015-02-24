@@ -9,8 +9,12 @@ FactoryGirl.define do
     sequence(:<%= attribute.name %>) {|n| "<%= class_name %>_<%= $1 %>#{n}" }
 <% elsif %[name title].include? attribute.name -%>
     sequence(:<%= attribute.name %>) {|n| "<%= class_name %> ##{n}" }
+<% elsif attribute.name == 'email' -%>
+    sequence(:<%= attribute.name %>) {|n| "email#{n}@gmail.com" }
 <% elsif attribute.name == 'position' -%>
     sequence(:<%= attribute.name %>) {|n| n }
+<% elsif attribute.name == 'password' -%>
+    password 'password'
 <% else -%>
     <%= attribute.name %> <%= attribute.default.inspect %>
 <% end -%>
