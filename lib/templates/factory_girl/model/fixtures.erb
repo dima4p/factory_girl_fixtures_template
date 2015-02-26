@@ -5,7 +5,7 @@ FactoryGirl.define do
     <%= attribute.name %> { create :<%= attribute.name %> }
 <% elsif /\A(.*)_name\z/.match attribute.name -%>
     sequence(:<%= attribute.name %>) {|n| "<%= class_name %>_<%= $1.try :capitalize %>#{n}" }
-<% elsif /\A.*_([a-z]{2}(_[a-z]{2})?)\z/.match attribute.name -%>
+<% elsif I18n.available_locales.include? /\A.*?_([a-z]{2}(_[A-Z]{2})?)\z/.match(attribute.name).try(:[], 1).try(:to_sym) -%>
     sequence(:<%= attribute.name %>) {|n| "<%= class_name %>_<%= $1 %>#{n}" }
 <% elsif %[name title].include? attribute.name -%>
     sequence(:<%= attribute.name %>) {|n| "<%= class_name %> ##{n}" }
