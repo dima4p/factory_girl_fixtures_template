@@ -1,20 +1,22 @@
 FactoryGirl.define do
   factory :<%= singular_table_name %><%= explicit_class_option %> do
+<% i = 0 -%>
 <% for attribute in attributes -%>
 <% if attribute.reference? -%>
-    <%= attribute.name %> { create :<%= attribute.name %> }
-<% elsif /\A(.*)_name\z/.match attribute.name -%>
-    sequence(:<%= attribute.name %>) {|n| "<%= class_name %>_<%= $1.try :capitalize %>#{n}" }
-<% elsif I18n.available_locales.include? /\A.*?_([a-z]{2}(_[A-Z]{2})?)\z/.match(attribute.name).try(:[], 1).try(:to_sym) -%>
-    sequence(:<%= attribute.name %>) {|n| "<%= class_name %>_<%= $1 %>#{n}" }
-<% elsif %[name title].include? attribute.name -%>
-    sequence(:<%= attribute.name %>) {|n| "<%= class_name %> ##{n}" }
+    association :<%= attribute.name %>, factory: :<%= attribute.name %>
 <% elsif attribute.name == 'email' -%>
-    sequence(:<%= attribute.name %>) {|n| "email#{n}@gmail.com" }
-<% elsif attribute.name == 'position' -%>
-    sequence(:<%= attribute.name %>) {|n| n }
+    sequence(:<%= attribute.name %>) {|n| "email#{format "%02d", n}@gmail.com" }
+<% elsif attribute.name =~ /(.*)_url$/ -%>
+    sequence(:<%= attribute.name %>) {|n| "http://<%= $1 %>#{format "%02d", n}.com" }
 <% elsif attribute.name == 'password' -%>
     password 'password'
+<% elsif attribute.name == 'position' -%>
+    sequence(:<%= attribute.name %>) {|n| n }
+<% elsif [:string, :text].include? attribute.type -%>
+    sequence(:<%= attribute.name %>) {|n| "<%= attribute.name.capitalize.gsub('_', ' ') %>#{format "%02d", n}" }
+<% elsif attribute.type == :integer -%>
+<% i += 1 -%>
+    sequence(:<%= attribute.name %>) {|n| "<%= i %>#{format "%02d", n}" }
 <% else -%>
     <%= attribute.name %> <%= attribute.default.inspect %>
 <% end -%>
